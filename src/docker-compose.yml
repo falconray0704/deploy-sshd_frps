@@ -1,0 +1,22 @@
+version: '3.6'
+services:
+  frps_sshd:
+    image: rayruan/amd64_frp:0.45.0
+    container_name: frps_sshd
+    ports:
+      - "${FRPS_BIND_PORT:-7100}:${FRPS_BIND_PORT:-7100}"
+      - "${SSHD_PORT_START:-7101}-${SSHD_PORT_END:-7110}:${SSHD_PORT_START:-7101}-${SSHD_PORT_END:-7110}"
+    environment:
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${CFGS_DIR}/frps.ini:/etc/frp/frps.ini:ro
+      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/frps_entrypoint.sh:/app/frps_entrypoint.sh:ro
+      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${SELFSIGNED_CERTS_DIR}/frps/server.crt:/server.crt:ro
+      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${SELFSIGNED_CERTS_DIR}/frps/server.key:/server.key:ro
+      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${SELFSIGNED_CERTS_DIR}/rootCA.crt:/rootCA.crt:ro
+    entrypoint: /app/frps_entrypoint.sh
+    restart: unless-stopped
+    
