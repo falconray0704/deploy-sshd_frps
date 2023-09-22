@@ -63,6 +63,11 @@ deploy_sshd_frps()
         cat ./src/README.md
 }
 
+deploy_frps_test_sshd()
+{
+	deploy_sshd_frps
+}
+
 usage_func()
 {
 

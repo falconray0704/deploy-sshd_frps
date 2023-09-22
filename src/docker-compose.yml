@@ -1,11 +1,12 @@
 version: '3.6'
 services:
   frps_sshd:
-    image: rayruan/amd64_frp:0.45.0
-    container_name: frps_sshd
+    image: rayruan/amd64_frp:0.51.3
+    container_name: ${SERVER_NAME}
     ports:
-      - "${FRPS_BIND_PORT:-7100}:${FRPS_BIND_PORT:-7100}"
-      - "${SSHD_PORT_START:-7101}-${SSHD_PORT_END:-7110}:${SSHD_PORT_START:-7101}-${SSHD_PORT_END:-7110}"
+      - "${FRPS_BIND_PORT:-65525}:${FRPS_BIND_PORT:-65525}"
+      - "${TCPMUX_HTTPCONNECT_PORT:-65524}:${TCPMUX_HTTPCONNECT_PORT:-65524}"
+      - "${SSHD_PORT_START:-65400}-${SSHD_PORT_END:-65499}:${SSHD_PORT_START:-65400}-${SSHD_PORT_END:-65499}"
     environment:
       PUID: 1000
       PGID: 1000

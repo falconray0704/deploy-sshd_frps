@@ -4,18 +4,28 @@
 
 ```bash
 ## frps listen port, if you use another one, you must make "bind_port" as the same in frps.ini .
-FRPS_BIND_PORT=7100
+# Reserve 65523 for final deployment
+#FRPS_BIND_PORT=65523
+# Reserve 65525 for test 
+FRPS_BIND_PORT=65525
+
+# Reserve 65522 for final deployment
+#TCPMUX_HTTPCONNECT_PORT = 65522
+# Reserve 65524 for test
+TCPMUX_HTTPCONNECT_PORT = 65524
 
 ## sshd port range, frps can serve multi frpc-sshd in LAN
-SSHD_PORT_START=7101
-SSHD_PORT_END=7110
+# Reserve 65300-65399 for final deployment
+# Reserve 65400-65499 for test
+SSHD_PORT_START=65400
+SSHD_PORT_END=65499
 
 ## Parent path for deployment
 #INSTALL_ROOT_PATH=/opt/servers
 INSTALL_ROOT_PATH=${HOME}/servers
 
 ## Directory for deployment at INSTALL_ROOT_PATH
-SERVER_NAME=sshd_frps
+SERVER_NAME=frps_test_sshd
 
 INSTALL_PATH=$INSTALL_ROOT_PATH/$SERVER_NAME
 
@@ -44,8 +54,10 @@ FRPS_SERVER_IP='192.168.0.1'
 Just refer to official document.
 The most required variables are:
 
+*  bind_port  : must be same as in .env file
+*  tcpmux_httpconnect_port  : must be same as in .env file
 * `token` : token for authentication between frpc and frps.
-* `subdomain_host` : subdomain for frps routing.
+* `subdomain_host` : subdomain for frps routing, must be same as in .env file.
 
 
 # 2. Initialize services environment
