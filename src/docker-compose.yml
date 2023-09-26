@@ -1,8 +1,8 @@
 version: '3.6'
 services:
   frps_sshd:
-    image: rayruan/amd64_frp:0.51.3
-    container_name: ${SERVER_NAME}
+    image: "rayruan/amd64_frp:${FRP_VERSION}"
+    container_name: "${SERVER_NAME}_${FRP_VERSION}"
     ports:
       - "${FRPS_SERVER_IP}:${FRPS_BIND_PORT:-65525}:${FRPS_BIND_PORT:-65525}"
       - "${FRPS_SERVER_IP}:${TCPMUX_HTTPCONNECT_PORT:-65524}:${TCPMUX_HTTPCONNECT_PORT:-65524}"
