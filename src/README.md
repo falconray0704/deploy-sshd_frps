@@ -25,7 +25,7 @@ SSHD_PORT_END=65499
 INSTALL_ROOT_PATH=${HOME}/servers
 
 ## Directory for deployment at INSTALL_ROOT_PATH
-SERVER_NAME=frps_test_sshd
+SERVER_NAME=frps_sshd
 
 INSTALL_PATH=$INSTALL_ROOT_PATH/$SERVER_NAME
 
@@ -54,9 +54,9 @@ FRPS_SERVER_IP='192.168.0.1'
 Just refer to official document.
 The most required variables are:
 
-*  bind_port  : must be same as in .env file
-*  tcpmux_httpconnect_port  : must be same as in .env file
-* `token` : token for authentication between frpc and frps.
+*  bindPort  : must be same as in .env file
+*  tcpmuxHTTPConnectPort : must be same as in .env file
+* `auth.token` : token for authentication between frpc and frps.
 * `subdomain_host` : subdomain for frps routing, must be same as in .env file.
 
 

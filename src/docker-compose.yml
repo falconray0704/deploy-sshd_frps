@@ -1,13 +1,14 @@
 version: '3.6'
 services:
   frps_sshd:
-    image: "rayruan/amd64_frp:${FRP_VERSION}"
+    image: "rayruan/amd64_frp_socat:${FRP_VERSION}"
     container_name: "${SERVER_NAME}_${FRP_VERSION}"
     ports:
-      - "${FRPS_SERVER_IP}:${FRPS_BIND_PORT:-65525}:${FRPS_BIND_PORT:-65525}"
+      - "${FRPS_SERVER_IP}:${FRPS_BIND_PORT:-65523}:${FRPS_BIND_PORT:-65523}"
+      - "${FRPS_SERVER_IP}:${FRPS_BIND_PORT:-65523}:${FRPS_BIND_PORT:-65523}/udp"
       - "${FRPS_SERVER_IP}:${TCPMUX_HTTPCONNECT_PORT:-65524}:${TCPMUX_HTTPCONNECT_PORT:-65524}"
-      - "${FRPS_SERVER_IP}:65414:65414"
-      - "${FRPS_SERVER_IP}:65452:65452"
+      - "${FRPS_SERVER_IP}:65314:65314"
+      - "${FRPS_SERVER_IP}:65352:65352"
 #      - "${FRPS_SERVER_IP}:${SSHD_PORT_START:-65400}-${SSHD_PORT_END:-65499}:${SSHD_PORT_START:-65400}-${SSHD_PORT_END:-65499}"
     environment:
       PUID: 1000
@@ -15,11 +16,11 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
-      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${CFGS_DIR}/frps.ini:/etc/frp/frps.ini:ro
+      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${CFGS_DIR}/frps.toml:/etc/frp/frps.toml:ro
       - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/frps_entrypoint.sh:/app/frps_entrypoint.sh:ro
-      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${SELFSIGNED_CERTS_DIR}/frps/server.crt:/server.crt:ro
-      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${SELFSIGNED_CERTS_DIR}/frps/server.key:/server.key:ro
-      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${SELFSIGNED_CERTS_DIR}/rootCA.crt:/rootCA.crt:ro
+      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${CERTS_DIR}/server.crt:/server.crt:ro
+      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${CERTS_DIR}/server.key:/server.key:ro
+      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${CERTS_DIR}/rootCA.crt:/ca.crt:ro
     entrypoint: /app/frps_entrypoint.sh
     restart: unless-stopped
     

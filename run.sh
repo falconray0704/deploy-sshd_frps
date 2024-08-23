@@ -42,7 +42,7 @@ EXEC_ITEMS_LIST=""
 
 
 
-deploy_sshd_frps()
+deploy_frps_sshd()
 {
     if [ ! -d ${DEPLOY_ROOT} ]
     then
@@ -56,11 +56,11 @@ deploy_sshd_frps()
         echoY "Deploying ${SERVER_NAME}..."
         cp -a ./src ${SERVER_HOME}
 
-        mkdir -p ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${SELFSIGNED_CERTS_DIR}
+        #mkdir -p ${INSTALL_ROOT_PATH}/${SERVER_NAME}/${SELFSIGNED_CERTS_DIR}
 
         echoG "${SERVER_NAME} has been deployed to ${DEPLOY_ROOT}/${SERVER_HOME} successfully."
-    fi
         cat ./src/README.md
+    fi
 }
 
 deploy_frps_test_sshd()

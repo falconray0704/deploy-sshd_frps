@@ -5,12 +5,10 @@ services:
     container_name: "${SERVER_NAME}_503_${FRP_VERSION}"
     ports:
       - "${FRPS_SERVER_IP}:${FRPS_BIND_PORT_503:-65525}:${FRPS_BIND_PORT_503:-65525}"
+      - "${FRPS_SERVER_IP}:${FRPS_BIND_PORT_503:-65525}:${FRPS_BIND_PORT_503:-65525}/udp"
       - "${FRPS_SERVER_IP}:${TCPMUX_HTTPCONNECT_PORT_503:-65524}:${TCPMUX_HTTPCONNECT_PORT_503:-65524}"
       - "${FRPS_SERVER_IP}:65414:65414"
       - "${FRPS_SERVER_IP}:65452:65452"
-#      - "${FRPS_SERVER_IP}:5000:5000"
-#      - "${FRPS_SERVER_IP}:5001:5001"
-#      - "${FRPS_SERVER_IP}:6690:6690"
 #      - "${FRPS_SERVER_IP}:${SSHD_PORT_START:-65400}-${SSHD_PORT_END:-65499}:${SSHD_PORT_START:-65400}-${SSHD_PORT_END:-65499}"
     environment:
       PUID: 1000
@@ -18,11 +16,11 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
-      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}_503/${CFGS_DIR}/frps_503.ini:/etc/frp/frps.ini:ro
+      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}_503/${CFGS_DIR}/frps_503.toml:/etc/frp/frps.toml:ro
       - ${INSTALL_ROOT_PATH}/${SERVER_NAME}_503/frps_entrypoint.sh:/app/frps_entrypoint.sh:ro
       - ${INSTALL_ROOT_PATH}/${SERVER_NAME}_503/${CERTS_DIR}/server.crt:/server.crt:ro
       - ${INSTALL_ROOT_PATH}/${SERVER_NAME}_503/${CERTS_DIR}/server.key:/server.key:ro
-      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}_503/${CERTS_DIR}/rootCA.crt:/rootCA.crt:ro
+      - ${INSTALL_ROOT_PATH}/${SERVER_NAME}_503/${CERTS_DIR}/rootCA.crt:/ca.crt:ro
     entrypoint: /app/frps_entrypoint.sh
     restart: unless-stopped
     
